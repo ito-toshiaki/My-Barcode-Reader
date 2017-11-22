@@ -1,7 +1,8 @@
-package cx.mb.mybarcodereader;
+package cx.mb.mybarcodereader.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import cx.mb.mybarcodereader.R;
 
 public class MainActivity extends AppCompatActivity {
 
