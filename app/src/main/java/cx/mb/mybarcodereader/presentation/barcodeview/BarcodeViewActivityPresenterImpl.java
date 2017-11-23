@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.widget.Toast;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
+import timber.log.Timber;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class BarcodeViewActivityPresenterImpl implements BarcodeViewActivityPres
 
     @Override
     public void barcodeResult(BarcodeResult result) {
+        Timber.d(result.toString());
+        Toast.makeText(parent, result.getText(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -27,12 +30,22 @@ public class BarcodeViewActivityPresenterImpl implements BarcodeViewActivityPres
     }
 
     @Override
-    public void onPause() {
-
+    public void onCreate(Activity parent) {
+       this.parent = parent;
     }
 
     @Override
-    public void onResume() {
-
+    public void onDestroy() {
+       // do nothing.
     }
+
+//    @Override
+//    public void onPause() {
+//
+//    }
+//
+//    @Override
+//    public void onResume() {
+//
+//    }
 }

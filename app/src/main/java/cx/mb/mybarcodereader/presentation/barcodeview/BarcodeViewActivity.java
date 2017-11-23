@@ -25,7 +25,7 @@ public class BarcodeViewActivity extends AppCompatActivity {
      * Barcode view.
      */
     @BindView(R.id.barcodeView)
-    private CompoundBarcodeView barcodeView;
+    CompoundBarcodeView barcodeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +35,25 @@ public class BarcodeViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         ((MyApplication) getApplication()).getAppComponent().inject(this);
 
+        presenter.onCreate(this);
         barcodeView.decodeSingle(presenter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.onPause();
         barcodeView.pause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.onResume();
         barcodeView.resume();
     }
 }

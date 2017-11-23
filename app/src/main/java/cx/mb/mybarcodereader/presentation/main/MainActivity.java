@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
+        presenter.onCreate(this);
     }
 
     /**
@@ -43,6 +44,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.main_shutter)
     void onClick(ImageButton btn) {
 
-        Toast.makeText(this, "hoge", Toast.LENGTH_SHORT).show();
+        presenter.startCamera();
     }
 }

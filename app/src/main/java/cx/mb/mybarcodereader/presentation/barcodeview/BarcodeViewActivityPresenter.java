@@ -1,5 +1,6 @@
 package cx.mb.mybarcodereader.presentation.barcodeview;
 
+import android.app.Activity;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
@@ -17,12 +18,23 @@ public interface BarcodeViewActivityPresenter extends BarcodeCallback {
     void possibleResultPoints(List<ResultPoint> resultPoints);
 
     /**
-     * onPause.
+     * onCreate.
+     * @param parent parent activity.
      */
-    void onPause();
+    void onCreate(Activity parent);
 
     /**
-     * onResume.
+     * onDestroy.
      */
-    void onResume();
+    void onDestroy();
+
+//    /**
+//     * onPause.
+//     */
+//    void onPause();
+//
+//    /**
+//     * onResume.
+//     */
+//    void onResume();
 }
