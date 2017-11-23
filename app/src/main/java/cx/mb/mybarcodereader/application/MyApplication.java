@@ -45,6 +45,10 @@ public class MyApplication extends Application {
         this.getAppComponent().inject(this);
     }
 
+    /**
+     * Returns appComponent.
+     * @return appComponent.
+     */
     public AppComponent getAppComponent() {
         return appComponent;
     }

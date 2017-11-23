@@ -15,9 +15,15 @@ import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Camera button.
+     */
     @BindView(R.id.shutter)
     ImageButton shutter;
 
+    /**
+     * Presenter module.
+     */
     @Inject
     MainActivityPresenter presenter;
 
@@ -31,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         ((MyApplication) getApplication()).getAppComponent().inject(this);
     }
 
+    /**
+     * Shutter button clicked.
+     * @param btn button.
+     */
     @OnClick(R.id.shutter)
     void onClick(ImageButton btn) {
 

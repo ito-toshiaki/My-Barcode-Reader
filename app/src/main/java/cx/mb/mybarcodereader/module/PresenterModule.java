@@ -9,9 +9,9 @@ import dagger.Provides;
 public class PresenterModule {
 
     /**
-     * Returns SplashPresenter.
+     * Returns MainActivityPresenter.
      *
-     * @return SplashPresenter.
+     * @return presenter.
      */
     @Provides
     public MainActivityPresenter provideMainActivityPresenter() {
