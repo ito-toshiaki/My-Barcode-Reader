@@ -1,9 +1,7 @@
 package cx.mb.mybarcodereader.module;
 
-import android.app.Activity;
-import android.app.Application;
-import cx.mb.mybarcodereader.presentation.barcodeview.BarcodeViewActivityPresenter;
-import cx.mb.mybarcodereader.presentation.barcodeview.BarcodeViewActivityPresenterImpl;
+import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenter;
+import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenterImpl;
 import cx.mb.mybarcodereader.presentation.main.MainActivityPresenter;
 import cx.mb.mybarcodereader.presentation.main.MainActivityPresenterImpl;
 import dagger.Module;
@@ -23,11 +21,11 @@ public class PresenterModule {
     }
 
     /**
-     * Returnes BarcodeViewActivityPresenter.
+     * Returnes BarcodeActivityPresenter.
      * @return presenter.
      */
     @Provides
-    public BarcodeViewActivityPresenter provideBarcodeViewActivityPresenter() {
-        return new BarcodeViewActivityPresenterImpl();
+    public BarcodeActivityPresenter provideBarcodeActivityPresenter() {
+        return new BarcodeActivityPresenterImpl();
     }
 }

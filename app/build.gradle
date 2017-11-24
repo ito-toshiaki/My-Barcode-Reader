@@ -59,6 +59,7 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.+'
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'com.google.dagger:dagger:2.13'
     compile 'com.jakewharton.timber:timber:4.6.0'

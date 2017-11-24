@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.barcodeview;
+package cx.mb.mybarcodereader.presentation.barcode;
 
 import android.app.Activity;
 import com.google.zxing.ResultPoint;
@@ -8,9 +8,9 @@ import com.journeyapps.barcodescanner.BarcodeResult;
 import java.util.List;
 
 /**
- * Presenter class for BarcodeViewActivity.
+ * Presenter class for BarcodeActivity.
  */
-public interface BarcodeViewActivityPresenter extends BarcodeCallback {
+public interface BarcodeActivityPresenter extends BarcodeCallback {
     @Override
     void barcodeResult(BarcodeResult result);
 

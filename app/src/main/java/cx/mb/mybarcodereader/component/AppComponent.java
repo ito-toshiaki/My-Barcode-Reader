@@ -3,7 +3,7 @@ package cx.mb.mybarcodereader.component;
 import cx.mb.mybarcodereader.application.MyApplication;
 import cx.mb.mybarcodereader.module.AppModule;
 import cx.mb.mybarcodereader.module.PresenterModule;
-import cx.mb.mybarcodereader.presentation.barcodeview.BarcodeViewActivity;
+import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
 import cx.mb.mybarcodereader.presentation.main.MainActivity;
 import dagger.Component;
 
@@ -29,8 +29,8 @@ public interface AppComponent {
     void  inject(MainActivity target);
 
     /**
-     * Injection for BarcodeViewActivity.
+     * Injection for BarcodeActivity.
      * @param target target.
      */
-    void inject(BarcodeViewActivity target);
+    void inject(BarcodeActivity target);
 }

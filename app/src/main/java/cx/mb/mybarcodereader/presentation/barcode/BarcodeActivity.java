@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.barcodeview;
+package cx.mb.mybarcodereader.presentation.barcode;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +13,13 @@ import javax.inject.Inject;
 /**
  * Barcode Reader Activity.
  */
-public class BarcodeViewActivity extends AppCompatActivity {
+public class BarcodeActivity extends AppCompatActivity {
 
     /**
      * Presenter.
      */
     @Inject
-    BarcodeViewActivityPresenter presenter;
+    BarcodeActivityPresenter presenter;
 
     /**
      * Barcode view.
@@ -30,7 +30,7 @@ public class BarcodeViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barcode_view);
+        setContentView(R.layout.activity_barcode);
 
         ButterKnife.bind(this);
         ((MyApplication) getApplication()).getAppComponent().inject(this);

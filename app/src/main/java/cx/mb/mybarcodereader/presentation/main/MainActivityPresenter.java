@@ -9,7 +9,7 @@ import android.app.Activity;
 public interface MainActivityPresenter {
 
     /**
-     * Start BarcodeViewActivity.
+     * Start BarcodeActivity.
      */
     void startCamera();
 
