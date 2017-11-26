@@ -9,6 +9,7 @@ import cx.mb.mybarcodereader.component.AppComponent;
 import cx.mb.mybarcodereader.component.DaggerAppComponent;
 import cx.mb.mybarcodereader.module.AppModule;
 import cx.mb.mybarcodereader.module.PresenterModule;
+import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -25,6 +26,8 @@ public class MyApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
+
+        Realm.init(this);
 
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);

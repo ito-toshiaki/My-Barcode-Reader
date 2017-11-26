@@ -8,8 +8,13 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
+import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import io.realm.Realm;
+import io.realm.RealmQuery;
 import timber.log.Timber;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,29 +28,45 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
      */
     private Activity parent;
 
+    /**
+     * Realm.
+     */
+    private Realm realm;
+
     @Override
     public void barcodeResult(BarcodeResult result) {
 
-        final BarcodeFormat barcodeFormat = result.getBarcodeFormat();
-        final Bitmap bitmap = result.getBitmap();
-        switch (barcodeFormat) {
-            case CODABAR:
-                final Map<ResultMetadataType, Object> resultMetadata = result.getResult().getResultMetadata();
-                break;
-            case CODE_39:
-                break;
-            case QR_CODE:
-                break;
-            default:
-                Toast.makeText(parent, "UNSUPPORTED FORMAT.", Toast.LENGTH_SHORT).show();
-
-        }
-
         Timber.d(result.toString());
         Toast.makeText(parent, result.getText(), Toast.LENGTH_SHORT).show();
-//        ((BarcodeActivity)parent).barcodeView.pause();
-        Handler handler = new Handler();
-        handler.postDelayed(() -> ((BarcodeActivity)parent).barcodeView.decodeSingle(this), 1000);
+
+        final BarcodeFormat barcodeFormat = result.getBarcodeFormat();
+        final Bitmap bitmap = result.getBitmap();
+        if (barcodeFormat != BarcodeFormat.CODABAR && barcodeFormat != BarcodeFormat.CODE_39 && barcodeFormat != BarcodeFormat.QR_CODE) {
+            Toast.makeText(parent, "UNSUPPORTED FORMAT.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            final String primaryKey = result.getText();
+            realm.executeTransaction(realm -> {
+                final long count = realm.where(BarcodeRealm.class).equalTo("key", primaryKey).count();
+                if (count > 0) {
+                    Timber.d("pk:%s is already exists.", primaryKey);
+                    return;
+                }
+
+                final BarcodeRealm obj = realm.createObject(BarcodeRealm.class, result.getText());
+                obj.setText(result.getText());
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+                obj.setImage(bos.toByteArray());
+                obj.setCreateAt(new Date());
+            });
+
+        } finally {
+            Handler handler = new Handler();
+            handler.postDelayed(() -> ((BarcodeActivity) parent).barcodeView.decodeSingle(this), 1000);
+        }
     }
 
     @Override
@@ -56,11 +77,12 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Override
     public void onCreate(Activity parent) {
        this.parent = parent;
+       realm = Realm.getDefaultInstance();
     }
 
     @Override
     public void onDestroy() {
-       // do nothing.
+        realm.close();
     }
 
 //    @Override
