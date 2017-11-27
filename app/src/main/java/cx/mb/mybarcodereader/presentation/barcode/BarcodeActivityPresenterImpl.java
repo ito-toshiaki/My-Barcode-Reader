@@ -9,6 +9,7 @@ import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import io.reactivex.subjects.BehaviorSubject;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import timber.log.Timber;
@@ -32,6 +33,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
      * Realm.
      */
     private Realm realm;
+
+    /**
+     * if scanned, set true.
+     */
+    private BehaviorSubject<Boolean> isScanned = BehaviorSubject.create();
 
     @Override
     public void barcodeResult(BarcodeResult result) {
@@ -77,6 +83,9 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Override
     public void onCreate(Activity parent) {
        this.parent = parent;
+       isScanned.subscribe(_isScanned -> {
+           Timber.d("isScanned:%b", _isScanned);
+       });
        realm = Realm.getDefaultInstance();
     }
 
