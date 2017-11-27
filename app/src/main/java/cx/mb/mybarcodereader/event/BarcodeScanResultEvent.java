@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader;
+package cx.mb.mybarcodereader.event;
 
 import lombok.Getter;
 

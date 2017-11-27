@@ -2,7 +2,7 @@ package cx.mb.mybarcodereader.consumer;
 
 
 import android.graphics.Bitmap;
-import cx.mb.mybarcodereader.BarcodeScanResultEvent;
+import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
 import cx.mb.mybarcodereader.realm.BarcodeRealm;
 import io.reactivex.functions.Consumer;
