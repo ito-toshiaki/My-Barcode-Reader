@@ -1,9 +1,11 @@
 package cx.mb.mybarcodereader.presentation.barcode;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
@@ -24,8 +26,14 @@ public class BarcodeActivity extends AppCompatActivity {
     /**
      * Barcode view.
      */
-    @BindView(R.id.barcodeView)
+    @BindView(R.id.barcode_preview)
     CompoundBarcodeView barcodeView;
+
+    /**
+     * Restart button.
+     */
+    @BindView(R.id.barcode_restart)
+    FloatingActionButton restart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +44,6 @@ public class BarcodeActivity extends AppCompatActivity {
         ((MyApplication) getApplication()).getAppComponent().inject(this);
 
         presenter.onCreate(this);
-        barcodeView.decodeSingle(presenter);
     }
 
     @Override
@@ -55,5 +62,14 @@ public class BarcodeActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         barcodeView.resume();
+    }
+
+    /**
+     * Click on Restart.
+     * @param btn button.
+     */
+    @OnClick(R.id.barcode_restart)
+    public void onClick(FloatingActionButton btn) {
+        presenter.restart();
     }
 }

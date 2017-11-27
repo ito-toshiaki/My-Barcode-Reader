@@ -11,6 +11,7 @@ import java.util.List;
  * Presenter class for BarcodeActivity.
  */
 public interface BarcodeActivityPresenter extends BarcodeCallback {
+
     @Override
     void barcodeResult(BarcodeResult result);
 
@@ -28,13 +29,8 @@ public interface BarcodeActivityPresenter extends BarcodeCallback {
      */
     void onDestroy();
 
-//    /**
-//     * onPause.
-//     */
-//    void onPause();
-//
-//    /**
-//     * onResume.
-//     */
-//    void onResume();
+    /**
+     * Restart scan.
+     */
+    void restart();
 }
