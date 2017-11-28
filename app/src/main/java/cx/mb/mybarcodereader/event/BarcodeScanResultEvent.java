@@ -8,16 +8,25 @@ import lombok.Getter;
 public class BarcodeScanResultEvent {
 
     /**
-     * scnanned return true.
+     * scanned return true.
      */
     @Getter
     private boolean scanned;
 
     /**
-     * Constructor.
-     * @param scanned scanned ?
+     * scanned item id.
      */
-    public BarcodeScanResultEvent(boolean scanned) {
+    @Getter
+    private String key;
+
+    /**
+     * Constructor.
+     *
+     * @param scanned scanned ?
+     * @param key     id.
+     */
+    public BarcodeScanResultEvent(boolean scanned, String key) {
         this.scanned = scanned;
+        this.key = key;
     }
 }

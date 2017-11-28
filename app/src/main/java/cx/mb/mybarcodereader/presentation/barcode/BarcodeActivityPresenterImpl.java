@@ -6,9 +6,12 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
+import cx.mb.mybarcodereader.application.MyApplication;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
+import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.subjects.BehaviorSubject;
 import io.realm.Realm;
 import org.greenrobot.eventbus.EventBus;
@@ -16,6 +19,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -37,6 +41,20 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
      * if scanned, set true.
      */
     private BehaviorSubject<BarcodeScanResultModel> isScanned = BehaviorSubject.create();
+
+    /**
+     * Hash service.
+     */
+    private HashService hashService;
+
+    /**
+     * Constructor.
+     *
+     * @param hashService hash service.
+     */
+    public BarcodeActivityPresenterImpl(HashService hashService) {
+        this.hashService = hashService;
+    }
 
     @Override
     public void barcodeResult(BarcodeResult result) {
@@ -66,7 +84,7 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Override
     public void onCreate(Activity parent) {
         this.parent = parent;
-        isScanned.subscribe(new BarcodeScanResultConsumer());
+        isScanned.subscribe(new BarcodeScanResultConsumer(this.hashService));
 
         realm = Realm.getDefaultInstance();
         EventBus.getDefault().register(this);
@@ -81,7 +99,7 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
     @Override
     public void restart() {
-       isScanned.onNext(BarcodeScanResultModel.getDefault());
+        isScanned.onNext(BarcodeScanResultModel.getDefault());
     }
 
     /**
@@ -93,9 +111,17 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBarcodeScanEvent(BarcodeScanResultEvent event) {
         if (event.isScanned()) {
-            ((BarcodeActivity) parent).barcodeView.pause();
+
+            final BarcodeRealm item = realm.where(BarcodeRealm.class).equalTo("key", event.getKey()).findFirst();
+            if (item == null) {
+                this.isScanned.onNext(BarcodeScanResultModel.getDefault());
+                return;
+            }
+            ((BarcodeActivity) parent).updateText(item.getText());
+            ((BarcodeActivity) parent).pauseScan();
         } else {
-            ((BarcodeActivity) parent).barcodeView.resume();
+            ((BarcodeActivity) parent).updateText("");
+            ((BarcodeActivity) parent).resumeScan();
             new Handler().postDelayed(() -> ((BarcodeActivity) parent).barcodeView.decodeSingle(BarcodeActivityPresenterImpl.this), 1000);
         }
     }

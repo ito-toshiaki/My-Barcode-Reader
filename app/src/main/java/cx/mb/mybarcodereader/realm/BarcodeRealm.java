@@ -16,7 +16,7 @@ import java.util.Date;
 public class BarcodeRealm extends RealmObject {
 
     /**
-     * Primary key. (hashed 'text')
+     * Primary key. (uuid + hashed text)
      */
     @PrimaryKey
     private String key;

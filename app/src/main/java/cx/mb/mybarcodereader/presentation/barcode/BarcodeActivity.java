@@ -3,6 +3,7 @@ package cx.mb.mybarcodereader.presentation.barcode;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -34,6 +35,12 @@ public class BarcodeActivity extends AppCompatActivity {
      */
     @BindView(R.id.barcode_restart)
     FloatingActionButton restart;
+
+    /**
+     * Result text.
+     */
+    @BindView(R.id.barcode_text)
+    TextView barcodeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,5 +78,27 @@ public class BarcodeActivity extends AppCompatActivity {
     @OnClick(R.id.barcode_restart)
     public void onClick(FloatingActionButton btn) {
         presenter.restart();
+    }
+
+    /**
+     * Pause barcode scan.
+     */
+    public void pauseScan() {
+        this.barcodeView.pause();
+    }
+
+    /**
+     * Resume barcode scan.
+     */
+    public void resumeScan() {
+        this.barcodeView.resume();
+    }
+
+    /**
+     * Set barcode text.
+     * @param text text.
+     */
+    public void updateText(String text) {
+        this.barcodeText.setText(text);
     }
 }
