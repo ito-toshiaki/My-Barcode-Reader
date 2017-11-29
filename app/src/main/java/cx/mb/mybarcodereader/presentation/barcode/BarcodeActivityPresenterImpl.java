@@ -11,6 +11,8 @@ import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
 import cx.mb.mybarcodereader.realm.BarcodeRealm;
 import cx.mb.mybarcodereader.service.HashService;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.realm.Realm;
 import org.greenrobot.eventbus.EventBus;
@@ -44,6 +46,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
      * Hash service.
      */
     private HashService hashService;
+
+    /**
+     * Disposable items.
+     */
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     /**
      * Constructor.
@@ -98,7 +105,8 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Override
     public void onCreate(Activity parent) {
         this.parent = parent;
-        isScanned.subscribe(new BarcodeScanResultConsumer(this.hashService));
+        Disposable subscribe = isScanned.subscribe(new BarcodeScanResultConsumer(this.hashService));
+        disposables.add(subscribe);
 
         realm = Realm.getDefaultInstance();
         EventBus.getDefault().register(this);
@@ -107,6 +115,7 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
     @Override
     public void onDestroy() {
+        disposables.clear();
         EventBus.getDefault().unregister(this);
         realm.close();
     }
