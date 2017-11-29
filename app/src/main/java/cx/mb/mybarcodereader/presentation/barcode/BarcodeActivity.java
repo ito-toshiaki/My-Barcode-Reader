@@ -37,7 +37,13 @@ public class BarcodeActivity extends AppCompatActivity {
     FloatingActionButton restart;
 
     /**
-     * Result text.
+     * Barcode type.
+     */
+    @BindView(R.id.barcode_type)
+    TextView barcodeType;
+
+    /**
+     * Barcode text.
      */
     @BindView(R.id.barcode_text)
     TextView barcodeText;
@@ -95,10 +101,12 @@ public class BarcodeActivity extends AppCompatActivity {
     }
 
     /**
-     * Set barcode text.
+     * Set barcode type and text.
+     * @param type type.
      * @param text text.
      */
-    public void updateText(String text) {
+    public void updateText(String type, String text) {
+        this.barcodeType.setText(type);
         this.barcodeText.setText(text);
     }
 }

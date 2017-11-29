@@ -131,10 +131,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
                 this.isScanned.onNext(BarcodeScanResultModel.getDefault());
                 return;
             }
-            ((BarcodeActivity) parent).updateText(item.getText());
+
+            ((BarcodeActivity) parent).updateText(item.getType(), item.getText());
             ((BarcodeActivity) parent).pauseScan();
         } else {
-            ((BarcodeActivity) parent).updateText("");
+            ((BarcodeActivity) parent).updateText("", "");
             ((BarcodeActivity) parent).resumeScan();
             new Handler().postDelayed(() -> ((BarcodeActivity) parent).barcodeView.decodeSingle(BarcodeActivityPresenterImpl.this), 1000);
         }

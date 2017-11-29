@@ -12,13 +12,20 @@
             android:id="@+id/barcode_preview"/>
 
     <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="0dp">
 
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/barcode_type"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:ems="10"
                 android:id="@+id/barcode_text"/>
 
