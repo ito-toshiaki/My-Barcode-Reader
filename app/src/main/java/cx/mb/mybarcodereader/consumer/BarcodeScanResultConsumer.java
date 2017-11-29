@@ -56,7 +56,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
                         Timber.d("pk:%s is already exists.", primaryKey);
                         return;
                     }
-                    final BarcodeRealm obj = _realm.createObject(BarcodeRealm.class, result.getText());
+                    final BarcodeRealm obj = _realm.createObject(BarcodeRealm.class, primaryKey);
                     obj.setType(result.getType());
                     obj.setText(result.getText());
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
