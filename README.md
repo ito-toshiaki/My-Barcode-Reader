@@ -9,3 +9,7 @@
  
  ## 裏目標
  1. Android開発時に有用なライブラリ類の学習
+    1. dagger2
+    1. Butter Knife
+    1. RxJava
+    1. RxAndroid
