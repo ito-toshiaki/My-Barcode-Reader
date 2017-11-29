@@ -2,7 +2,6 @@ package cx.mb.mybarcodereader.presentation.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -18,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Camera button.
      */
-    @BindView(R.id.shutter)
+    @BindView(R.id.main_shutter)
     ImageButton shutter;
 
     /**
@@ -35,15 +34,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
+        presenter.onCreate(this);
     }
 
     /**
      * Shutter button clicked.
      * @param btn button.
      */
-    @OnClick(R.id.shutter)
+    @OnClick(R.id.main_shutter)
     void onClick(ImageButton btn) {
 
-        Toast.makeText(this, "hoge", Toast.LENGTH_SHORT).show();
+        presenter.startCamera();
     }
 }

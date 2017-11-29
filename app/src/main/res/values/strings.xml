@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Barcode Reader</string>
+
+    <!--
+    <string name="barcode_type_qr">QR</string>
+    <string name="barcode_type_codabar">NW-7(CODABAR)</string>
+    <string name="barcode_type_code_39">CODE39</string>
+    -->
 </resources>
