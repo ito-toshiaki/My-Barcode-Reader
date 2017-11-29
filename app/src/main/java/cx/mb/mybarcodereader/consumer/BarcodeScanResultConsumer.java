@@ -28,6 +28,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
 
     /**
      * Constructor.
+     *
      * @param hash hash service.
      */
     @Inject
@@ -40,13 +41,13 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
 
         Timber.d("isScanned:%s", result);
 
+        final String primaryKey = !result.isScanned() ? "" : UUID.randomUUID().toString() + "_" + hash.calculate(result.getText());
         try {
             if (!result.isScanned()) {
                 return;
             }
 
             try (Realm realm = Realm.getDefaultInstance()) {
-                final String primaryKey = UUID.randomUUID().toString() + "_" + hash.calculate(result.getText());
                 Timber.d("PrimaryKey:%s", primaryKey);
 
                 realm.executeTransaction(_realm -> {
@@ -56,6 +57,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
                         return;
                     }
                     final BarcodeRealm obj = _realm.createObject(BarcodeRealm.class, result.getText());
+                    obj.setType(result.getType());
                     obj.setText(result.getText());
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     result.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, bos);
@@ -65,7 +67,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
             }
         } finally {
             if (EventBus.getDefault().hasSubscriberForEvent(BarcodeScanResultEvent.class)) {
-                EventBus.getDefault().post(new BarcodeScanResultEvent(result.isScanned()));
+                EventBus.getDefault().post(new BarcodeScanResultEvent(result.isScanned(), primaryKey));
             } else {
                 Timber.w("BarcodeScanResultEvent is not subscribed.");
             }
