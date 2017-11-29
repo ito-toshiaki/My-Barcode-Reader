@@ -6,7 +6,6 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
-import cx.mb.mybarcodereader.application.MyApplication;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
@@ -19,7 +18,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import timber.log.Timber;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -70,6 +68,22 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
         final BarcodeScanResultModel model = new BarcodeScanResultModel();
         model.setScanned(true);
+
+//        final String type;
+//        switch (barcodeFormat) {
+//            case CODABAR:
+//                type = parent.getString(R.string.barcode_type_codabar);
+//                break;
+//            case CODE_39:
+//                type = parent.getString(R.string.barcode_type_code_39);
+//                break;
+//            case QR_CODE:
+//                type = parent.getString(R.string.barcode_type_qr);
+//                break;
+//            default:
+//                throw new RuntimeException(String.format(Locale.ENGLISH, "Barcode Format:%s", barcodeFormat.name()));
+//        }
+        model.setType(barcodeFormat.name());
         model.setText(result.getText());
         model.setBitmap(result.getBitmap());
 

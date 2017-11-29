@@ -21,6 +21,11 @@ public class BarcodeScanResultModel implements Serializable {
     private boolean isScanned;
 
     /**
+     * Barcode type string.
+     */
+    private String type;
+
+    /**
      * Text.
      */
     private String text;
@@ -33,6 +38,7 @@ public class BarcodeScanResultModel implements Serializable {
     public static final BarcodeScanResultModel getDefault() {
         final BarcodeScanResultModel model = new BarcodeScanResultModel();
         model.setScanned(false);
+        model.setType("");
         model.setText("");
         model.setBitmap(null);
 

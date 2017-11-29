@@ -22,6 +22,12 @@ public class BarcodeRealm extends RealmObject {
     private String key;
 
     /**
+     * Barcode type string.
+     */
+    @Required
+    private String type;
+
+    /**
      * Text.
      */
     @Required
