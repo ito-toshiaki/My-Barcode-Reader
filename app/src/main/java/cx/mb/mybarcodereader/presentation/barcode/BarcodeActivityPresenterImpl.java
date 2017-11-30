@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
+import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
@@ -69,7 +70,7 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
         final BarcodeFormat barcodeFormat = result.getBarcodeFormat();
         if (barcodeFormat != BarcodeFormat.CODABAR && barcodeFormat != BarcodeFormat.CODE_39 && barcodeFormat != BarcodeFormat.QR_CODE) {
-            Toast.makeText(parent, "UNSUPPORTED FORMAT.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(parent, R.string.error_unsupported_barcode_format, Toast.LENGTH_SHORT).show();
             return;
         }
 

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         Timber.i("external storage permission granted.");
                         shutter.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(this, "NOT GRANTED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.error_permission_external_storage, Toast.LENGTH_SHORT).show();
                     }
                 });
        disposables.add(disposable);

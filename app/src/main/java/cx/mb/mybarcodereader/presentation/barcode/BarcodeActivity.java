@@ -87,11 +87,11 @@ public class BarcodeActivity extends AppCompatActivity {
                 .request(Manifest.permission.CAMERA)
                 .subscribe(granted -> {
                     if (granted) {
-                        Timber.i("All permission granted.");
+                        Timber.i("camera permission granted.");
                         presenter.startCamera();
                         restart.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(this, "NOT GRANTED", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.error_permission_camera, Toast.LENGTH_SHORT).show();
                     }
                 });
         disposables.add(disposable);
