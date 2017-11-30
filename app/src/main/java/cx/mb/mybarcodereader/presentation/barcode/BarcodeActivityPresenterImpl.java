@@ -75,21 +75,6 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
         final BarcodeScanResultModel model = new BarcodeScanResultModel();
         model.setScanned(true);
-
-//        final String type;
-//        switch (barcodeFormat) {
-//            case CODABAR:
-//                type = parent.getString(R.string.barcode_type_codabar);
-//                break;
-//            case CODE_39:
-//                type = parent.getString(R.string.barcode_type_code_39);
-//                break;
-//            case QR_CODE:
-//                type = parent.getString(R.string.barcode_type_qr);
-//                break;
-//            default:
-//                throw new RuntimeException(String.format(Locale.ENGLISH, "Barcode Format:%s", barcodeFormat.name()));
-//        }
         model.setType(barcodeFormat.name());
         model.setText(result.getText());
         model.setBitmap(result.getBitmap());
@@ -110,7 +95,6 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
 
         realm = Realm.getDefaultInstance();
         EventBus.getDefault().register(this);
-        isScanned.onNext(BarcodeScanResultModel.getDefault());
     }
 
     @Override
@@ -123,6 +107,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     @Override
     public void restart() {
         isScanned.onNext(BarcodeScanResultModel.getDefault());
+    }
+
+    @Override
+    public void startCamera() {
+       isScanned.onNext(BarcodeScanResultModel.getDefault());
     }
 
     /**
@@ -149,14 +138,4 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
             new Handler().postDelayed(() -> ((BarcodeActivity) parent).barcodeView.decodeSingle(BarcodeActivityPresenterImpl.this), 1000);
         }
     }
-
-//    @Override
-//    public void onPause() {
-//
-//    }
-//
-//    @Override
-//    public void onResume() {
-//
-//    }
 }

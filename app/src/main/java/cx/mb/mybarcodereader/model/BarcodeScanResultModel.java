@@ -35,7 +35,7 @@ public class BarcodeScanResultModel implements Serializable {
      */
     private Bitmap bitmap;
 
-    public static final BarcodeScanResultModel getDefault() {
+    public static BarcodeScanResultModel getDefault() {
         final BarcodeScanResultModel model = new BarcodeScanResultModel();
         model.setScanned(false);
         model.setType("");

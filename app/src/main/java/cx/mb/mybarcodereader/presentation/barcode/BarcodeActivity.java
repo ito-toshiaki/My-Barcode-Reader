@@ -1,17 +1,24 @@
 package cx.mb.mybarcodereader.presentation.barcode;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
@@ -51,6 +58,11 @@ public class BarcodeActivity extends AppCompatActivity {
     TextView barcodeText;
 
     /**
+     * Disposable items.
+     */
+    private CompositeDisposable disposables = new CompositeDisposable();
+
+    /**
      * Create boot intent.
      * @param context parent context.
      * @return intent
@@ -68,11 +80,27 @@ public class BarcodeActivity extends AppCompatActivity {
         ((MyApplication) getApplication()).getAppComponent().inject(this);
 
         presenter.onCreate(this);
+
+        restart.setVisibility(View.GONE);
+        final RxPermissions rxPermissions = new RxPermissions(this);
+        final Disposable disposable = rxPermissions
+                .request(Manifest.permission.CAMERA)
+                .subscribe(granted -> {
+                    if (granted) {
+                        Timber.i("All permission granted.");
+                        presenter.startCamera();
+                        restart.setVisibility(View.VISIBLE);
+                    } else {
+                        Toast.makeText(this, "NOT GRANTED", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        disposables.add(disposable);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        disposables.clear();
         presenter.onDestroy();
     }
 

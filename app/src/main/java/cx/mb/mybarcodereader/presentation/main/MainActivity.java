@@ -3,6 +3,7 @@ package cx.mb.mybarcodereader.presentation.main;
 import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -49,12 +50,16 @@ public class MainActivity extends AppCompatActivity {
         ((MyApplication) getApplication()).getAppComponent().inject(this);
         presenter.onCreate(this);
 
+        // default is gone.
+        shutter.setVisibility(View.GONE);
+
         final RxPermissions rxPermissions = new RxPermissions(this);
         final Disposable disposable = rxPermissions
-                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
-                        Timber.i("All permission granted.");
+                        Timber.i("external storage permission granted.");
+                        shutter.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(this, "NOT GRANTED", Toast.LENGTH_SHORT).show();
                     }
