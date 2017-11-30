@@ -21,8 +21,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
 
     @Override
     public void startCamera() {
-        Intent intent = new Intent(parent, BarcodeActivity.class);
-        parent.startActivity(intent);
+        parent.startActivity(BarcodeActivity.createIntent(parent));
     }
 
 }

@@ -1,5 +1,7 @@
 package cx.mb.mybarcodereader.presentation.barcode;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +49,15 @@ public class BarcodeActivity extends AppCompatActivity {
      */
     @BindView(R.id.barcode_text)
     TextView barcodeText;
+
+    /**
+     * Create boot intent.
+     * @param context parent context.
+     * @return intent
+     */
+    public static Intent createIntent(Context context) {
+        return new Intent(context, BarcodeActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

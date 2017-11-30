@@ -1,5 +1,6 @@
 package cx.mb.mybarcodereader.presentation.main;
 
+import android.Manifest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -7,11 +8,18 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 import javax.inject.Inject;
 
+/**
+ * Main(History) activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -26,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     MainActivityPresenter presenter;
 
+    /**
+     * Disposable items.
+     */
+    private CompositeDisposable disposables = new CompositeDisposable();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +48,24 @@ public class MainActivity extends AppCompatActivity {
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
         presenter.onCreate(this);
+
+        final RxPermissions rxPermissions = new RxPermissions(this);
+        final Disposable disposable = rxPermissions
+                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+                    if (granted) {
+                        Timber.i("All permission granted.");
+                    } else {
+                        Toast.makeText(this, "NOT GRANTED", Toast.LENGTH_SHORT).show();
+                    }
+                });
+       disposables.add(disposable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.clear();
     }
 
     /**
