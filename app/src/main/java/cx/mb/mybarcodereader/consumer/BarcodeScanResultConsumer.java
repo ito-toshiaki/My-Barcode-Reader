@@ -53,7 +53,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
                 realm.executeTransaction(_realm -> {
                     final long count = _realm.where(BarcodeRealm.class).equalTo("key", primaryKey).count();
                     if (count > 0) {
-                        Timber.d("pk:%s is already exists.", primaryKey);
+                        Timber.w("pk:%s is already exists.", primaryKey);
                         return;
                     }
                     final BarcodeRealm obj = _realm.createObject(BarcodeRealm.class, primaryKey);

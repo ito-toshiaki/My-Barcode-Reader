@@ -6,7 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Calculate hash string.
+ * Calculate MD5 hash string.
  */
 public class HashServiceMd5Impl implements HashService {
 

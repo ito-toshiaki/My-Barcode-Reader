@@ -1,7 +1,6 @@
 package cx.mb.mybarcodereader.presentation.main;
 
 import android.app.Activity;
-import android.content.Intent;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
 
 /**

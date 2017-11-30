@@ -9,7 +9,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Presentaer module.
+ * Presenter module.
  */
 @Module
 public class PresenterModule {
@@ -25,7 +25,7 @@ public class PresenterModule {
     }
 
     /**
-     * Returnes BarcodeActivityPresenter.
+     * Returns BarcodeActivityPresenter.
      * @return presenter.
      */
     @Provides

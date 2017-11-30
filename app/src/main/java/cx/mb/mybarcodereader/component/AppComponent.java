@@ -5,8 +5,6 @@ import cx.mb.mybarcodereader.module.AppModule;
 import cx.mb.mybarcodereader.module.PresenterModule;
 import cx.mb.mybarcodereader.module.ServiceModule;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
-import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenter;
-import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenterImpl;
 import cx.mb.mybarcodereader.presentation.main.MainActivity;
 import dagger.Component;
 
