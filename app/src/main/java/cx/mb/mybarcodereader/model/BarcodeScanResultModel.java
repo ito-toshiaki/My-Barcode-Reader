@@ -18,7 +18,7 @@ public class BarcodeScanResultModel implements Serializable {
     /**
      * if scanned return true.
      */
-    private boolean isScanned;
+    private boolean scanned;
 
     /**
      * Barcode type string.

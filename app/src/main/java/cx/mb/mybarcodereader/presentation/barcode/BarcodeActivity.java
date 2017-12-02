@@ -60,7 +60,7 @@ public class BarcodeActivity extends AppCompatActivity {
     /**
      * Disposable items.
      */
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
      * Create boot intent.
@@ -89,7 +89,6 @@ public class BarcodeActivity extends AppCompatActivity {
                     if (granted) {
                         Timber.i("camera permission granted.");
                         presenter.startCamera();
-                        restart.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(this, R.string.error_permission_camera, Toast.LENGTH_SHORT).show();
                     }
@@ -118,11 +117,10 @@ public class BarcodeActivity extends AppCompatActivity {
 
     /**
      * Click on Restart.
-     * @param btn button.
      */
     @OnClick(R.id.barcode_restart)
-    public void onClick(FloatingActionButton btn) {
-        presenter.restart();
+    public void onClick() {
+        presenter.startCamera();
     }
 
     /**
@@ -144,7 +142,7 @@ public class BarcodeActivity extends AppCompatActivity {
      * @param type type.
      * @param text text.
      */
-    public void updateText(String type, String text) {
+    public void update(String type, String text) {
         this.barcodeType.setText(type);
         this.barcodeText.setText(text);
     }

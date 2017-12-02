@@ -20,8 +20,8 @@ public class HashServiceMd5Impl implements HashService {
 
             // Create Hex String
             StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < messageDigest.length; i++) {
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            for (byte aMessageDigest : messageDigest) {
+                hexString.append(Integer.toHexString(0xFF & aMessageDigest));
             }
 
             return hexString.toString();

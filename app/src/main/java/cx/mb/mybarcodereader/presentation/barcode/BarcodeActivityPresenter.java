@@ -30,11 +30,6 @@ public interface BarcodeActivityPresenter extends BarcodeCallback {
     void onDestroy();
 
     /**
-     * Restart scan.
-     */
-    void restart();
-
-    /**
      * start camera.(default)
      */
     void startCamera();
