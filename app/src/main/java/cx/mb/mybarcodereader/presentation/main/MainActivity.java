@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Disposable items.
      */
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

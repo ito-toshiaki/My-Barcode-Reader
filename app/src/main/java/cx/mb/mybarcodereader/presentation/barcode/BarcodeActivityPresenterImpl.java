@@ -42,17 +42,17 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter {
     /**
      * Scan status.
      */
-    private BehaviorSubject<BarcodeScanResultModel> status = BehaviorSubject.create();
+    private final BehaviorSubject<BarcodeScanResultModel> status = BehaviorSubject.create();
 
     /**
      * Hash service.
      */
-    private HashService hashService;
+    private final HashService hashService;
 
     /**
      * Disposable items.
      */
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
      * Constructor.

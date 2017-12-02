@@ -24,7 +24,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
     /**
      * Hash service.
      */
-    private HashService hash;
+    private final HashService hash;
 
     /**
      * Constructor.
@@ -37,7 +37,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
     }
 
     @Override
-    public void accept(BarcodeScanResultModel result) throws Exception {
+    public void accept(BarcodeScanResultModel result) {
 
         Timber.d("isScanned:%s", result);
 

@@ -60,7 +60,7 @@ public class BarcodeActivity extends AppCompatActivity {
     /**
      * Disposable items.
      */
-    private CompositeDisposable disposables = new CompositeDisposable();
+    private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
      * Create boot intent.

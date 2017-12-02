@@ -15,7 +15,7 @@ public class AppModule {
     /**
      * Application class.
      */
-    private Application app;
+    private final Application app;
 
     /**
      * Constructor.
