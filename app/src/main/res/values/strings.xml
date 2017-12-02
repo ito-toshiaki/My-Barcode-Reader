@@ -8,6 +8,6 @@
     -->
 
     <string name="error_unsupported_barcode_format">未対応のバーコードです</string>
-    <string name="error_permission_external_storage">外部ストレージ</string>
-    <string name="error_permission_camera">かめら</string>
+    <string name="error_permission_external_storage">ストレージの使用を許可してください</string>
+    <string name="error_permission_camera">カメラの使用を許可してください</string>
 </resources>
