@@ -11,7 +11,7 @@ import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResult;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
-import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import cx.mb.mybarcodereader.realm.RealmBarcode;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -116,7 +116,7 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
             return;
         }
 
-        final BarcodeRealm item = realm.where(BarcodeRealm.class).equalTo("key", id).findFirst();
+        final RealmBarcode item = realm.where(RealmBarcode.class).equalTo("key", id).findFirst();
         if (item == null) {
             this.status.onNext(BarcodeScanResultModel.getDefault());
             return;

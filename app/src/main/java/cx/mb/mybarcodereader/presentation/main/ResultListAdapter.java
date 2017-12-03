@@ -6,20 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import cx.mb.mybarcodereader.R;
-import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import cx.mb.mybarcodereader.realm.RealmBarcode;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmBaseAdapter;
 
 /**
  * Result list adapter.
  */
-public class ResultListAdapter extends RealmBaseAdapter<BarcodeRealm> {
+public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
 
     /**
      * Constructor.
      * @param data data.
      */
-    public ResultListAdapter(@Nullable OrderedRealmCollection<BarcodeRealm> data) {
+    public ResultListAdapter(@Nullable OrderedRealmCollection<RealmBarcode> data) {
         super(data);
     }
 
@@ -38,7 +38,7 @@ public class ResultListAdapter extends RealmBaseAdapter<BarcodeRealm> {
             holder = (ViewHolder) view.getTag();
         }
 
-        final BarcodeRealm item = getItem(i);
+        final RealmBarcode item = getItem(i);
         assert item != null;
 
         holder.type.setText(item.getType());

@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Getter
 @Setter
-public class BarcodeRealm extends RealmObject {
+public class RealmBarcode extends RealmObject {
 
     /**
      * Primary key. (uuid + hashed text)
