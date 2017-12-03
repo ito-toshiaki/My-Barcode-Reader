@@ -75,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Shutter button clicked.
-     * @param btn button.
      */
     @OnClick(R.id.main_shutter)
-    void onClick(ImageButton btn) {
+    void onClick() {
 
         presenter.startCamera();
     }
