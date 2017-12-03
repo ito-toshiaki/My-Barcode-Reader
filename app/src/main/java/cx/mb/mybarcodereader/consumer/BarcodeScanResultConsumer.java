@@ -2,13 +2,11 @@ package cx.mb.mybarcodereader.consumer;
 
 
 import android.graphics.Bitmap;
-import cx.mb.mybarcodereader.event.BarcodeScanResultEvent;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
 import cx.mb.mybarcodereader.realm.BarcodeRealm;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.functions.Consumer;
 import io.realm.Realm;
-import org.greenrobot.eventbus.EventBus;
 import timber.log.Timber;
 
 import javax.inject.Inject;
@@ -27,12 +25,18 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
     private final HashService hash;
 
     /**
+     * Result interface.
+     */
+    private final BarcodeScanResult parent;
+
+    /**
      * Constructor.
-     *
+     * @param parent result destination.
      * @param hash hash service.
      */
     @Inject
-    public BarcodeScanResultConsumer(HashService hash) {
+    public BarcodeScanResultConsumer(BarcodeScanResult parent, HashService hash) {
+        this.parent = parent;
         this.hash = hash;
     }
 
@@ -66,11 +70,7 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
                 });
             }
         } finally {
-            if (EventBus.getDefault().hasSubscriberForEvent(BarcodeScanResultEvent.class)) {
-                EventBus.getDefault().post(new BarcodeScanResultEvent(result.isScanned(), primaryKey));
-            } else {
-                Timber.w("BarcodeScanResultEvent is not subscribed.");
-            }
+            parent.notify(result.isScanned(), primaryKey);
         }
     }
 }
