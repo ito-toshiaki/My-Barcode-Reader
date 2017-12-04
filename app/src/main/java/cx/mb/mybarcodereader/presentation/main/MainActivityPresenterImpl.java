@@ -1,6 +1,7 @@
 package cx.mb.mybarcodereader.presentation.main;
 
 import android.app.Activity;
+import cx.mb.mybarcodereader.adapter.ResultListAdapter;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
 import cx.mb.mybarcodereader.realm.RealmBarcode;
 import io.realm.Realm;

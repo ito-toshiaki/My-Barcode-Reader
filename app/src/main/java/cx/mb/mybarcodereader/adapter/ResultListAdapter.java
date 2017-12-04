@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.main;
+package cx.mb.mybarcodereader.adapter;
 
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
