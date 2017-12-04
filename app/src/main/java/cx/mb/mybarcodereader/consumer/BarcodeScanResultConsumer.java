@@ -3,7 +3,7 @@ package cx.mb.mybarcodereader.consumer;
 
 import android.graphics.Bitmap;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
-import cx.mb.mybarcodereader.realm.BarcodeRealm;
+import cx.mb.mybarcodereader.realm.RealmBarcode;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.functions.Consumer;
 import io.realm.Realm;
@@ -55,12 +55,12 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
                 Timber.d("PrimaryKey:%s", primaryKey);
 
                 realm.executeTransaction(_realm -> {
-                    final long count = _realm.where(BarcodeRealm.class).equalTo("key", primaryKey).count();
+                    final long count = _realm.where(RealmBarcode.class).equalTo("key", primaryKey).count();
                     if (count > 0) {
                         Timber.w("pk:%s is already exists.", primaryKey);
                         return;
                     }
-                    final BarcodeRealm obj = _realm.createObject(BarcodeRealm.class, primaryKey);
+                    final RealmBarcode obj = _realm.createObject(RealmBarcode.class, primaryKey);
                     obj.setType(result.getType());
                     obj.setText(result.getText());
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();

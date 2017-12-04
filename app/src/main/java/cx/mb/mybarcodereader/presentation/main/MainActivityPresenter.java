@@ -18,4 +18,9 @@ public interface MainActivityPresenter {
      * @param  parent parent activity.
      */
     void onCreate(Activity parent);
+
+    /**
+     * onDestroy.
+     */
+    void onDestroy();
 }
