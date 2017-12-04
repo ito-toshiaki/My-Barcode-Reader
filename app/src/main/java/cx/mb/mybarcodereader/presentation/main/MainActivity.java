@@ -9,6 +9,8 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, R.string.error_permission_external_storage, Toast.LENGTH_SHORT).show();
                     }
                 });
-       disposables.add(disposable);
+        disposables.add(disposable);
     }
 
     @Override
@@ -78,7 +80,18 @@ public class MainActivity extends AppCompatActivity {
      */
     @OnClick(R.id.main_shutter)
     void onClick() {
+        new LibsBuilder()
+                .withLibraries(
+                        "Butterknife",
+                        "Dagger2",
+                        "LeakCanary",
+                        "Timber",
+                        "rxJava",
+                        "rxAndroid",
+                        "Realm")
+                .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                .start(this);
 
-        presenter.startCamera();
+//        presenter.startCamera();
     }
 }
