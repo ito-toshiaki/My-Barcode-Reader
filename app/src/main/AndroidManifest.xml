@@ -2,10 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="cx.mb.mybarcodereader">
 
-    <!--
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    -->
+
     <application
             android:name=".application.MyApplication"
             android:allowBackup="false"
