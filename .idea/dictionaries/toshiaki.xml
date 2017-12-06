@@ -2,6 +2,9 @@
   <dictionary name="toshiaki">
     <words>
       <w>butterknife</w>
+      <w>lombok</w>
+      <w>stetho</w>
+      <w>zxing</w>
     </words>
   </dictionary>
 </component>

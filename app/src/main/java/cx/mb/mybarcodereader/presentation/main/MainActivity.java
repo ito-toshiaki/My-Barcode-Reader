@@ -92,12 +92,14 @@ public class MainActivity extends AppCompatActivity {
      */
     @OnClick(R.id.main_shutter)
     void onClick() {
+
+        /*
         final Notices notices = new Notices();
         notices.addNotice(new Notice("Butter Knife", "", "Copyright 2013 Jake Wharton", new ApacheSoftwareLicense20()));
         notices.addNotice(new Notice("Dagger2", "", "Copyright (C) 2012 The Dagger Authors.", new ApacheSoftwareLicense20()));
         notices.addNotice(new Notice("Timber", "", "Copyright 2013 Jake Wharton", new ApacheSoftwareLicense20()));
         notices.addNotice(new Notice("Lombok", "", "Copyright © 2009-2017 The Project Lombok Authors", new MITLicense()));
-        notices.addNotice(new Notice("stetho", "", "Copyright (c) 2014-present, Facebook, Inc.", new BSD2ClauseLicense()));
+        notices.addNotice(new Notice("Stetho", "", "Copyright (c) 2014-present, Facebook, Inc.", new BSD2ClauseLicense()));
         notices.addNotice(new Notice("Stetho-Realm", "", "Copyright (c) 2015-present, uPhyca, Inc.", new BSD2ClauseLicense()));
         notices.addNotice(new Notice("Realm", "", "Copyright 2017 Realm Inc.", new ApacheSoftwareLicense20()));
         notices.addNotice(new Notice("android-adapters", "", "Copyright 2017 Realm Inc.", new ApacheSoftwareLicense20()));
@@ -116,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         fragment.show(getSupportFragmentManager(), null);
+        */
 
-//        presenter.startCamera();
+        presenter.startCamera();
     }
 }
