@@ -1,6 +1,8 @@
 package cx.mb.mybarcodereader.realm;
 
+import android.graphics.Bitmap;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 import lombok.Getter;
@@ -38,6 +40,12 @@ public class RealmBarcode extends RealmObject {
      */
     @Required
     private byte[] image;
+
+    /**
+     * Raw bitmap (not save.)
+     */
+    @Ignore
+    private Bitmap bitmap;
 
     /**
      * Date of create(scan).
