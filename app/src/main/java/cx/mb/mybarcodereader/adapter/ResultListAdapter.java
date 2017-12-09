@@ -49,7 +49,7 @@ public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
         holder.type.setText(item.getType());
         holder.text.setText(item.getText());
         if (item.getBitmap() == null ) {
-            Timber.d("Key:%s's bitmap is null.", item.getKey());
+//            Timber.d("Key:%s's bitmap is null.", item.getKey());
             final Bitmap bitmap = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
             item.setBitmap(bitmap);
         }
