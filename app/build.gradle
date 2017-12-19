@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
-apply plugin: 'me.tatarka.retrolambda'
 
 /**
  * Generate versionCode
@@ -18,16 +17,17 @@ def computeVersionCode() {
 }
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.2'
     defaultConfig {
         applicationId "cx.mb.mybarcodereader"
         minSdkVersion 22
-        targetSdkVersion 25
-        versionName "1.0.0"
+        targetSdkVersion 27
+        versionName "0.0.1"
         versionCode = computeVersionCode()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -57,9 +57,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:26.+'
+    compile 'com.android.support:design:27.0.2'
 
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -68,6 +68,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
 
     provided 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor 'org.projectlombok:lombok:1.16.18'
 
     compile 'com.jakewharton.timber:timber:4.6.0'
 
