@@ -3,6 +3,8 @@ package cx.mb.mybarcodereader.presentation.main;
 
 import android.app.Activity;
 
+import cx.mb.mybarcodereader.realm.OrmaDatabase;
+
 /**
  * Presenter class for MainActivity.
  */
@@ -16,8 +18,9 @@ public interface MainActivityPresenter {
     /**
      * onCreate.
      * @param  parent parent activity.
+     * @param database database.
      */
-    void onCreate(Activity parent);
+    void onCreate(Activity parent, OrmaDatabase database);
 
     /**
      * onDestroy.

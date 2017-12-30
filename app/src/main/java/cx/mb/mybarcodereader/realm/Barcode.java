@@ -1,5 +1,7 @@
 package cx.mb.mybarcodereader.realm;
 
+import com.github.gfx.android.orma.ColumnDef;
+import com.github.gfx.android.orma.OrderSpec;
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
 import com.github.gfx.android.orma.annotation.Table;
@@ -45,6 +47,6 @@ public class Barcode {
     /**
      * Date of create(scan).
      */
-    @Column
+    @Column(helpers = Column.Helpers.ORDER_IN_ASC)
     private Date createAt;
 }

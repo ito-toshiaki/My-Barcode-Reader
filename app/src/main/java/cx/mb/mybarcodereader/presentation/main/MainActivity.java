@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import cx.mb.mybarcodereader.realm.OrmaDatabase;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
     MainActivityPresenter presenter;
 
     /**
+     * Database.
+     */
+    @Inject
+    OrmaDatabase database;
+
+    /**
      * Disposable items.
      */
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -57,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
-        presenter.onCreate(this);
+        presenter.onCreate(this, database);
 
         // default is gone.
         shutter.setVisibility(View.GONE);
