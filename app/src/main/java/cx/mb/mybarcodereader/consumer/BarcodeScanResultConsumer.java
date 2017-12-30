@@ -10,8 +10,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
-import cx.mb.mybarcodereader.realm.Barcode;
-import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import cx.mb.mybarcodereader.orma.Barcode;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.functions.Consumer;
 import timber.log.Timber;

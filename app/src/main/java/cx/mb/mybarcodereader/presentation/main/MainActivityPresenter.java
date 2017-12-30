@@ -3,7 +3,7 @@ package cx.mb.mybarcodereader.presentation.main;
 
 import android.app.Activity;
 
-import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 
 /**
  * Presenter class for MainActivity.

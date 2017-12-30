@@ -1,7 +1,5 @@
-package cx.mb.mybarcodereader.realm;
+package cx.mb.mybarcodereader.orma;
 
-import com.github.gfx.android.orma.ColumnDef;
-import com.github.gfx.android.orma.OrderSpec;
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
 import com.github.gfx.android.orma.annotation.Table;

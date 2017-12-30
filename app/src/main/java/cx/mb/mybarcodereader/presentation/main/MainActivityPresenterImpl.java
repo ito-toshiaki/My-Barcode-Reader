@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import cx.mb.mybarcodereader.adapter.BarcodeListAdapter;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
-import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 
 /**
  * Presenter class for MainActivity.

@@ -11,7 +11,7 @@ import com.github.gfx.android.orma.Relation;
 import com.github.gfx.android.orma.widget.OrmaListAdapter;
 
 import cx.mb.mybarcodereader.R;
-import cx.mb.mybarcodereader.realm.Barcode;
+import cx.mb.mybarcodereader.orma.Barcode;
 
 /**
  * List adapter of barcode list.

@@ -4,7 +4,7 @@ import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenter;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivityPresenterImpl;
 import cx.mb.mybarcodereader.presentation.main.MainActivityPresenter;
 import cx.mb.mybarcodereader.presentation.main.MainActivityPresenterImpl;
-import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 import cx.mb.mybarcodereader.service.HashService;
 import dagger.Module;
 import dagger.Provides;

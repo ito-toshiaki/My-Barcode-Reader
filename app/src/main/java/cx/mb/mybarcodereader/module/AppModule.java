@@ -6,7 +6,7 @@ import com.github.gfx.android.orma.AccessThreadConstraint;
 
 import javax.inject.Singleton;
 
-import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 import dagger.Module;
 import dagger.Provides;
 
