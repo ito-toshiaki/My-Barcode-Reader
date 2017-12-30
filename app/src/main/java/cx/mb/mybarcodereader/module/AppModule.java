@@ -1,10 +1,14 @@
 package cx.mb.mybarcodereader.module;
 
 import android.app.Application;
-import dagger.Module;
-import dagger.Provides;
+
+import com.github.gfx.android.orma.AccessThreadConstraint;
 
 import javax.inject.Singleton;
+
+import cx.mb.mybarcodereader.realm.OrmaDatabase;
+import dagger.Module;
+import dagger.Provides;
 
 /**
  * Application module.
@@ -37,4 +41,17 @@ public class AppModule {
         return app;
     }
 
+    /**
+     * Return orma database.
+     *
+     * @return OrmaDatabase.
+     */
+    @Provides
+    @Singleton
+    public OrmaDatabase provideOrmaDatabase() {
+        return OrmaDatabase
+                .builder(this.app)
+                .writeOnMainThread(AccessThreadConstraint.WARNING)
+                .build();
+    }
 }

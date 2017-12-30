@@ -4,22 +4,24 @@ import android.app.Activity;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeResult;
+
+import java.util.List;
+
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResult;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
-import cx.mb.mybarcodereader.realm.RealmBarcode;
+import cx.mb.mybarcodereader.realm.Barcode;
+import cx.mb.mybarcodereader.realm.OrmaDatabase;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.subjects.BehaviorSubject;
-import io.realm.Realm;
 import timber.log.Timber;
-
-import java.util.List;
 
 /**
  * Presenter class for BarcodeActivity.
@@ -32,11 +34,6 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
     private BarcodeActivity parent;
 
     /**
-     * Realm.
-     */
-    private Realm realm;
-
-    /**
      * Scan status.
      */
     private final BehaviorSubject<BarcodeScanResultModel> status = BehaviorSubject.create();
@@ -47,6 +44,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
     private final HashService hashService;
 
     /**
+     * Orma database.
+     */
+    private final OrmaDatabase database;
+
+    /**
      * Disposable items.
      */
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -55,9 +57,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
      * Constructor.
      *
      * @param hashService hash service.
+     * @param database database.
      */
-    public BarcodeActivityPresenterImpl(HashService hashService) {
+    public BarcodeActivityPresenterImpl(HashService hashService, OrmaDatabase database) {
         this.hashService = hashService;
+        this.database = database;
     }
 
     @Override
@@ -88,16 +92,13 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
     @Override
     public void onCreate(Activity parent) {
         this.parent = (BarcodeActivity) parent;
-        Disposable subscribe = status.subscribe(new BarcodeScanResultConsumer(this, this.hashService));
+        Disposable subscribe = status.subscribe(new BarcodeScanResultConsumer(this, this.hashService, this.database));
         disposables.add(subscribe);
-
-        realm = Realm.getDefaultInstance();
     }
 
     @Override
     public void onDestroy() {
         disposables.clear();
-        realm.close();
     }
 
     @Override
@@ -116,13 +117,13 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
             return;
         }
 
-        final RealmBarcode item = realm.where(RealmBarcode.class).equalTo("key", id).findFirst();
+        final Barcode item = database.selectFromBarcode().keyEq(id).valueOrNull();
         if (item == null) {
             this.status.onNext(BarcodeScanResultModel.getDefault());
             return;
         }
-
         parent.update(item.getType(), item.getText());
+
         parent.pauseScan();
         parent.restart.setVisibility(View.VISIBLE);
     }

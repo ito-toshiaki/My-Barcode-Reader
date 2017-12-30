@@ -3,14 +3,12 @@ package cx.mb.mybarcodereader.application;
 import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 import cx.mb.mybarcodereader.BuildConfig;
 import cx.mb.mybarcodereader.component.AppComponent;
 import cx.mb.mybarcodereader.component.DaggerAppComponent;
 import cx.mb.mybarcodereader.module.AppModule;
 import cx.mb.mybarcodereader.module.PresenterModule;
 import cx.mb.mybarcodereader.module.ServiceModule;
-import io.realm.Realm;
 import timber.log.Timber;
 
 /**
@@ -28,15 +26,13 @@ public class MyApplication extends Application {
 
         super.onCreate();
 
-        Realm.init(this);
-
         if (BuildConfig.DEBUG) {
             LeakCanary.install(this);
             Timber.plant(new Timber.DebugTree());
             Stetho.initialize(
                     Stetho.newInitializerBuilder(this)
                             .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                            .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                            .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                             .build());
         }
 

@@ -7,23 +7,19 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
-import de.psdev.licensesdialog.LicensesDialogFragment;
-import de.psdev.licensesdialog.licenses.ApacheSoftwareLicense20;
-import de.psdev.licensesdialog.licenses.BSD2ClauseLicense;
-import de.psdev.licensesdialog.licenses.MITLicense;
-import de.psdev.licensesdialog.model.Notice;
-import de.psdev.licensesdialog.model.Notices;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import javax.inject.Inject;
 
 /**
  * Main(History) activity.
@@ -92,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @OnClick(R.id.main_shutter)
     void onClick() {
+        /*
         final Notices notices = new Notices();
         notices.addNotice(new Notice("Butter Knife", "", "Copyright 2013 Jake Wharton", new ApacheSoftwareLicense20()));
         notices.addNotice(new Notice("Dagger2", "", "Copyright (C) 2012 The Dagger Authors.", new ApacheSoftwareLicense20()));
@@ -116,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         fragment.show(getSupportFragmentManager(), null);
+        */
 
-//        presenter.startCamera();
+        presenter.startCamera();
     }
 }
