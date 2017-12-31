@@ -1,55 +1,57 @@
-package cx.mb.mybarcodereader.realm;
+package cx.mb.mybarcodereader.orma;
 
 import android.graphics.Bitmap;
-import io.realm.RealmObject;
-import io.realm.annotations.Ignore;
-import io.realm.annotations.PrimaryKey;
-import io.realm.annotations.Required;
-import lombok.Getter;
-import lombok.Setter;
+
+import com.github.gfx.android.orma.annotation.Column;
+import com.github.gfx.android.orma.annotation.PrimaryKey;
+import com.github.gfx.android.orma.annotation.Table;
 
 import java.util.Date;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Barcode Object.
+ * Created by toshiaki on 2017/12/30.
  */
-@Getter
+@Table
 @Setter
-public class RealmBarcode extends RealmObject {
+@Getter
+public class Barcode {
 
     /**
      * Primary key. (uuid + hashed text)
      */
-    @PrimaryKey
+    @PrimaryKey()
     private String key;
 
     /**
      * Barcode type string.
      */
-    @Required
+    @Column
     private String type;
 
     /**
      * Text.
      */
-    @Required
+    @Column
     private String text;
 
     /**
      * Raw image.
      */
-    @Required
+    @Column
     private byte[] image;
 
     /**
      * Raw bitmap (not save.)
      */
-    @Ignore
     private Bitmap bitmap;
 
     /**
      * Date of create(scan).
      */
-    @Required
+    @Column(helpers = Column.Helpers.ORDER_IN_ASC)
     private Date createAt;
 }

@@ -7,17 +7,20 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import javax.inject.Inject;
 
 /**
  * Main(History) activity.
@@ -43,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
     MainActivityPresenter presenter;
 
     /**
+     * Database.
+     */
+    @Inject
+    OrmaDatabase database;
+
+    /**
      * Disposable items.
      */
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -55,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
-        presenter.onCreate(this);
+        presenter.onCreate(this, database);
 
         // default is gone.
         shutter.setVisibility(View.GONE);
@@ -86,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
      */
     @OnClick(R.id.main_shutter)
     void onClick() {
-
         /*
         final Notices notices = new Notices();
         notices.addNotice(new Notice("Butter Knife", "", "Copyright 2013 Jake Wharton", new ApacheSoftwareLicense20()));

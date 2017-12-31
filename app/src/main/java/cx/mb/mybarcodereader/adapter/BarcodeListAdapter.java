@@ -1,30 +1,35 @@
 package cx.mb.mybarcodereader.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.github.gfx.android.orma.Relation;
+import com.github.gfx.android.orma.widget.OrmaListAdapter;
+
 import cx.mb.mybarcodereader.R;
-import cx.mb.mybarcodereader.realm.RealmBarcode;
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmBaseAdapter;
-import timber.log.Timber;
+import cx.mb.mybarcodereader.orma.Barcode;
 
 /**
- * Result list adapter.
+ * List adapter of barcode list.
+ * Created by toshiaki on 2017/12/30.
  */
-public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
+public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
 
     /**
      * Constructor.
-     * @param data data.
+     *
+     * @param context  context.
+     * @param relation relation.
      */
-    public ResultListAdapter(@Nullable OrderedRealmCollection<RealmBarcode> data) {
-        super(data);
+    public BarcodeListAdapter(@NonNull Context context, @NonNull Relation<Barcode, ?> relation) {
+        super(context, relation);
     }
 
     @Override
@@ -43,18 +48,15 @@ public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
             holder = (ViewHolder) view.getTag();
         }
 
-        final RealmBarcode item = getItem(i);
-        assert item != null;
+        final Barcode item = getItem(i);
 
         holder.type.setText(item.getType());
         holder.text.setText(item.getText());
-        if (item.getBitmap() == null ) {
-//            Timber.d("Key:%s's bitmap is null.", item.getKey());
+        if (item.getBitmap() == null) {
             final Bitmap bitmap = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
             item.setBitmap(bitmap);
         }
         holder.image.setImageBitmap(item.getBitmap());
-
 
         return view;
     }
@@ -79,3 +81,4 @@ public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
         ImageView image;
     }
 }
+

@@ -1,12 +1,10 @@
 package cx.mb.mybarcodereader.presentation.main;
 
 import android.app.Activity;
-import cx.mb.mybarcodereader.adapter.ResultListAdapter;
+
+import cx.mb.mybarcodereader.adapter.BarcodeListAdapter;
 import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
-import cx.mb.mybarcodereader.realm.RealmBarcode;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
+import cx.mb.mybarcodereader.orma.OrmaDatabase;
 
 /**
  * Presenter class for MainActivity.
@@ -18,25 +16,16 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
      */
     private MainActivity parent;
 
-    /**
-     * Realm.
-     */
-    private Realm realm;
-
     @Override
-    public void onCreate(Activity parent) {
+    public void onCreate(Activity parent, OrmaDatabase database) {
         this.parent = (MainActivity) parent;
-        realm = Realm.getDefaultInstance();
 
-        final RealmResults<RealmBarcode> items = realm.where(RealmBarcode.class)
-                .findAllSorted("createAt", Sort.DESCENDING);
-        final ResultListAdapter adapter = new ResultListAdapter(items);
+        BarcodeListAdapter adapter = new BarcodeListAdapter(this.parent, database.relationOfBarcode().orderByCreateAtAsc());
         ((MainActivity) parent).resultList.setAdapter(adapter);
     }
 
     @Override
     public void onDestroy() {
-        realm.close();
     }
 
 
