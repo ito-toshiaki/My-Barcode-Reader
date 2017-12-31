@@ -1,26 +1,32 @@
 package cx.mb.mybarcodereader.adapter;
 
-import android.support.annotation.Nullable;
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.github.gfx.android.orma.Relation;
+import com.github.gfx.android.orma.widget.OrmaListAdapter;
+
 import cx.mb.mybarcodereader.R;
-import cx.mb.mybarcodereader.realm.RealmBarcode;
-import io.realm.OrderedRealmCollection;
-import io.realm.RealmBaseAdapter;
+import cx.mb.mybarcodereader.orma.Barcode;
 
 /**
- * Result list adapter.
+ * List adapter of barcode list.
+ * Created by toshiaki on 2017/12/30.
  */
-public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
+public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
 
     /**
      * Constructor.
-     * @param data data.
+     *
+     * @param context  context.
+     * @param relation relation.
      */
-    public ResultListAdapter(@Nullable OrderedRealmCollection<RealmBarcode> data) {
-        super(data);
+    public BarcodeListAdapter(@NonNull Context context, @NonNull Relation<Barcode, ?> relation) {
+        super(context, relation);
     }
 
     @Override
@@ -38,12 +44,10 @@ public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
             holder = (ViewHolder) view.getTag();
         }
 
-        final RealmBarcode item = getItem(i);
-        assert item != null;
+        final Barcode item = getItem(i);
 
         holder.type.setText(item.getType());
         holder.text.setText(item.getText());
-
         return view;
     }
 
@@ -62,3 +66,4 @@ public class ResultListAdapter extends RealmBaseAdapter<RealmBarcode> {
         TextView text;
     }
 }
+

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 
 /**
  * Generate versionCode
@@ -70,12 +69,12 @@ dependencies {
     provided 'org.projectlombok:lombok:1.16.18'
     annotationProcessor 'org.projectlombok:lombok:1.16.18'
 
+    compile 'com.github.gfx.android.orma:orma:4.2.5'
+    annotationProcessor 'com.github.gfx.android.orma:orma-processor:4.2.5'
+
     compile 'com.jakewharton.timber:timber:4.6.0'
 
     compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.uphyca:stetho_realm:2.2.2'
-
-    compile 'io.realm:android-adapters:2.1.1'
 
     compile 'com.google.zxing:core:3.3.1'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0@aar'
