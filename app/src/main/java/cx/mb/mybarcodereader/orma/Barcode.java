@@ -21,7 +21,7 @@ public class Barcode {
     /**
      * Primary key. (uuid + hashed text)
      */
-    @PrimaryKey(autoincrement = false)
+    @PrimaryKey()
     private String key;
 
     /**
