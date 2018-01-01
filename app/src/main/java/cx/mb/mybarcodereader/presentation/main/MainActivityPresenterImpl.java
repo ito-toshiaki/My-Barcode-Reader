@@ -20,7 +20,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
     public void onCreate(Activity parent, OrmaDatabase database) {
         this.parent = (MainActivity) parent;
 
-        BarcodeListAdapter adapter = new BarcodeListAdapter(this.parent, database.relationOfBarcode().orderByCreateAtAsc());
+        BarcodeListAdapter adapter = new BarcodeListAdapter(this.parent, database.relationOfBarcode().orderByCreateAtDesc());
         ((MainActivity) parent).resultList.setAdapter(adapter);
     }
 

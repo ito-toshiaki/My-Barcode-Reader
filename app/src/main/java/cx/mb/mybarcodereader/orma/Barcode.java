@@ -52,6 +52,6 @@ public class Barcode {
     /**
      * Date of create(scan).
      */
-    @Column(helpers = Column.Helpers.ORDER_IN_ASC)
+    @Column(helpers = Column.Helpers.ORDERS)
     private Date createAt;
 }
