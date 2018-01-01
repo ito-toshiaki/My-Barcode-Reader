@@ -22,13 +22,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
                 android:id="@+id/main_result_item_type"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/item_main_result_margin"
-                tools:text="Barcode Type"
-        />
+                tools:text="Barcode Type" />
+
+            <TextView
+                android:id="@+id/main_result_item_create_at"
+                android:gravity="end"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/item_main_result_margin"
+                tools:text="9999/99/99 99:99:99"/>
+        </LinearLayout>
         <TextView
                 android:id="@+id/main_result_item_text"
                 android:layout_width="match_parent"

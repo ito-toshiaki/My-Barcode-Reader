@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_main_result, viewGroup, false);
             holder = new ViewHolder();
             holder.type = view.findViewById(R.id.main_result_item_type);
+            holder.createAt = view.findViewById(R.id.main_result_item_create_at);
             holder.text = view.findViewById(R.id.main_result_item_text);
             holder.image = view.findViewById(R.id.main_result_item_image);
 
@@ -49,9 +51,11 @@ public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
         }
 
         final Barcode item = getItem(i);
+        String formattedCreateAt = DateFormat.format("yyyy/MM/dd kk:mm:ss", item.getCreateAt()).toString();
 
         holder.type.setText(item.getType());
         holder.text.setText(item.getText());
+        holder.createAt.setText(formattedCreateAt);
         if (item.getBitmap() == null) {
             final Bitmap bitmap = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
             item.setBitmap(bitmap);
@@ -69,6 +73,11 @@ public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
          * Type string.
          */
         TextView type;
+
+        /**
+         * Create at.
+         */
+        TextView createAt;
 
         /**
          * text string.
