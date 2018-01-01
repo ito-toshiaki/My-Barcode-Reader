@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="layout_padding">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="item_main_result_margin">4dp</dimen>
+</resources>
