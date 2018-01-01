@@ -13,6 +13,7 @@
         <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:contentDescription="@string/captured_image"
                 app:srcCompat="@drawable/leak_canary_icon"
                 android:id="@+id/main_result_item_image"/>
     </LinearLayout>
