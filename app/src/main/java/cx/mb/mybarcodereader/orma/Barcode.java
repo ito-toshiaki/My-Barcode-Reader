@@ -1,5 +1,7 @@
 package cx.mb.mybarcodereader.orma;
 
+import android.graphics.Bitmap;
+
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
 import com.github.gfx.android.orma.annotation.Table;
@@ -43,8 +45,13 @@ public class Barcode {
     private byte[] image;
 
     /**
+     * Raw bitmap (not save.)
+     */
+    private Bitmap bitmap;
+
+    /**
      * Date of create(scan).
      */
-    @Column(helpers = Column.Helpers.ORDER_IN_ASC)
+    @Column(helpers = Column.Helpers.ORDERS)
     private Date createAt;
 }

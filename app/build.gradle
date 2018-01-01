@@ -10,7 +10,7 @@ def computeVersionCode() {
     def versionCode = String.format("%d%02d%02d",
             versions[0].toInteger(),
             versions[1].toInteger(),
-            versions[2].toInteger()).toInteger();
+            versions[2].toInteger()).toInteger()
 
     return versionCode
 }
