@@ -1,19 +1,28 @@
 package cx.mb.mybarcodereader.presentation.barcode;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,6 +30,8 @@ import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 import javax.inject.Inject;
+
+import static android.content.Intent.EXTRA_TEXT;
 
 /**
  * Barcode Reader Activity.
@@ -63,7 +74,13 @@ public class BarcodeActivity extends AppCompatActivity {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
+     * Context menu id of 'copy'.
+     */
+    private final int CONTEXT_MENU_ID_1 = 0;
+
+    /**
      * Create boot intent.
+     *
      * @param context parent context.
      * @return intent
      */
@@ -94,6 +111,59 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 });
         disposables.add(disposable);
+
+        registerForContextMenu(this.barcodeText);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.setHeaderTitle(getString(R.string.barcode_context_title));
+        menu.add(0, CONTEXT_MENU_ID_1, 0, getString(R.string.barcode_context_menu1));
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        if (TextUtils.isEmpty(barcodeText.getText().toString())) {
+            Toast.makeText(this, getText(R.string.error_barcode_text_is_empty), Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case CONTEXT_MENU_ID_1:
+                // Copy
+
+                /*
+                // クリップボードに格納するItemを作成
+                ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
+
+                // MIMETYPEの作成
+                String[] mimeType = new String[1];
+                mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST;
+
+                // クリップボードに格納するClipDataオブジェクトの作成
+                ClipData cd = new ClipData(new ClipDescription("text_data", mimeType), clip);
+
+                // クリップボードにデータを格納
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                assert cm != null;
+                cm.setPrimaryClip(cd);
+                */
+
+                ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                sendIntent.putExtra(EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
+                startActivity(sendIntent);
+                Toast.makeText(this, getText(R.string.arcode_text_copied), Toast.LENGTH_LONG).show();
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -139,6 +209,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
     /**
      * Set barcode type and text.
+     *
      * @param type type.
      * @param text text.
      */
