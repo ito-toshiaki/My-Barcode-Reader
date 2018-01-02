@@ -155,13 +155,17 @@ public class BarcodeActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        barcodeView.pause();
+        if (!this.presenter.isScanned()) {
+            barcodeView.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        barcodeView.resume();
+        if (!this.presenter.isScanned()) {
+            barcodeView.resume();
+        }
     }
 
     /**

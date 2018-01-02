@@ -33,4 +33,10 @@ public interface BarcodeActivityPresenter extends BarcodeCallback {
      * start camera.(default)
      */
     void startCamera();
+
+    /**
+     * if scanned return true.
+     * @return scanned ?
+     */
+    boolean isScanned();
 }
