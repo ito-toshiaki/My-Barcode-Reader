@@ -107,6 +107,11 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
     }
 
     @Override
+    public boolean isScanned() {
+        return this.status.getValue().isScanned();
+    }
+
+    @Override
     public void notify(boolean scanned, String id) {
 
         if (!scanned) {
