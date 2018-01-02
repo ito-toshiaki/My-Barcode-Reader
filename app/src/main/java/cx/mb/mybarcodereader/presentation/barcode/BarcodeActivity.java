@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
 import io.reactivex.disposables.CompositeDisposable;
@@ -111,8 +112,6 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 });
         disposables.add(disposable);
-
-        registerForContextMenu(this.barcodeText);
     }
 
     @Override
@@ -123,47 +122,27 @@ public class BarcodeActivity extends AppCompatActivity {
         menu.add(0, CONTEXT_MENU_ID_1, 0, getString(R.string.barcode_context_menu1));
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    /**
+     * Barcode text long click.
+     * @return if return true, not fire click event.
+     */
+    @OnLongClick(R.id.barcode_text)
+    @SuppressWarnings("unused")
+    public boolean onLongClick() {
 
         if (TextUtils.isEmpty(barcodeText.getText().toString())) {
             Toast.makeText(this, getText(R.string.error_barcode_text_is_empty), Toast.LENGTH_LONG).show();
             return true;
         }
 
-        switch (item.getItemId()) {
-            case CONTEXT_MENU_ID_1:
-                // Copy
+        ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
+        startActivity(sendIntent);
 
-                /*
-                // クリップボードに格納するItemを作成
-                ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
-
-                // MIMETYPEの作成
-                String[] mimeType = new String[1];
-                mimeType[0] = ClipDescription.MIMETYPE_TEXT_URILIST;
-
-                // クリップボードに格納するClipDataオブジェクトの作成
-                ClipData cd = new ClipData(new ClipDescription("text_data", mimeType), clip);
-
-                // クリップボードにデータを格納
-                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                assert cm != null;
-                cm.setPrimaryClip(cd);
-                */
-
-                ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.setType("text/plain");
-                sendIntent.putExtra(EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
-                startActivity(sendIntent);
-                Toast.makeText(this, getText(R.string.arcode_text_copied), Toast.LENGTH_LONG).show();
-
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
+        return true;
     }
 
     @Override
