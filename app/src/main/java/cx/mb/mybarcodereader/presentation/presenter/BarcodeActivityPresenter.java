@@ -69,6 +69,7 @@ public class BarcodeActivityPresenter implements BarcodeScanResult, BarcodeCallb
         this.database = database;
     }
 
+    @Override
     public void barcodeResult(BarcodeResult result) {
 
         Timber.d(result.toString());
@@ -88,24 +89,39 @@ public class BarcodeActivityPresenter implements BarcodeScanResult, BarcodeCallb
         status.onNext(model);
     }
 
+    @Override
     public void possibleResultPoints(List<ResultPoint> resultPoints) {
-
+        // do nothing.
     }
 
+    /**
+     * onCreate.
+     * @param parent parent activity.
+     */
     public void onCreate(Activity parent) {
         this.parent = (BarcodeActivity) parent;
         Disposable subscribe = status.subscribe(new BarcodeScanResultConsumer(this, this.hashService, this.database));
         disposables.add(subscribe);
     }
 
+    /**
+     * onDestroy.
+     */
     public void onDestroy() {
         disposables.clear();
     }
 
+    /**
+     * Start camera.
+     */
     public void startCamera() {
         status.onNext(BarcodeScanResultModel.getDefault());
     }
 
+    /**
+     * Return scanned.
+     * @return scanned.
+     */
     public boolean isScanned() {
         final BarcodeScanResultModel value = this.status.getValue();
         return value != null && value.isScanned();

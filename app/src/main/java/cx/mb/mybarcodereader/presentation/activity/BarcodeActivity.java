@@ -8,18 +8,18 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
@@ -27,8 +27,6 @@ import cx.mb.mybarcodereader.presentation.presenter.BarcodeActivityPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import javax.inject.Inject;
 
 import static android.content.Intent.EXTRA_TEXT;
 
@@ -73,11 +71,6 @@ public class BarcodeActivity extends AppCompatActivity {
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     /**
-     * Context menu id of 'copy'.
-     */
-    private final int CONTEXT_MENU_ID_1 = 0;
-
-    /**
      * Create boot intent.
      *
      * @param context parent context.
@@ -110,14 +103,6 @@ public class BarcodeActivity extends AppCompatActivity {
                     }
                 });
         disposables.add(disposable);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.setHeaderTitle(getString(R.string.barcode_context_title));
-        menu.add(0, CONTEXT_MENU_ID_1, 0, getString(R.string.barcode_context_menu1));
     }
 
     /**

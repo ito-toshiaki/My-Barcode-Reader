@@ -51,11 +51,11 @@ public class MainActivityPresenter implements AdapterView.OnItemLongClickListene
         ((MainActivity) parent).getResultList().setOnItemLongClickListener(this);
     }
 
-    /**
-     * onDestroy.
-     */
-    public void onDestroy() {
-    }
+//    /**
+//     * onDestroy.
+//     */
+//    public void onDestroy() {
+//    }
 
     /**
      * Start camera.
