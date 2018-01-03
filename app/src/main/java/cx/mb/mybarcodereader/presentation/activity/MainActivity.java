@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.main;
+package cx.mb.mybarcodereader.presentation.activity;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
-import cx.mb.mybarcodereader.orma.OrmaDatabase;
+import cx.mb.mybarcodereader.presentation.presenter.MainActivityPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -46,12 +46,6 @@ public class MainActivity extends AppCompatActivity {
     MainActivityPresenter presenter;
 
     /**
-     * Database.
-     */
-    @Inject
-    OrmaDatabase database;
-
-    /**
      * Disposable items.
      */
     private final CompositeDisposable disposables = new CompositeDisposable();
@@ -64,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         ((MyApplication) getApplication()).getAppComponent().inject(this);
-        presenter.onCreate(this, database);
+        presenter.onCreate(this);
 
         // default is gone.
         shutter.setVisibility(View.GONE);
@@ -123,5 +117,13 @@ public class MainActivity extends AppCompatActivity {
         */
 
         presenter.startCamera();
+    }
+
+    /**
+     * Get result list object.
+     * @return result list.
+     */
+    public ListView getResultList() {
+        return this.resultList;
     }
 }

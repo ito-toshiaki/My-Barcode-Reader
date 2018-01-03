@@ -1,9 +1,7 @@
-package cx.mb.mybarcodereader.presentation.barcode;
+package cx.mb.mybarcodereader.presentation.activity;
 
 import android.Manifest;
 import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +23,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import cx.mb.mybarcodereader.presentation.presenter.BarcodeActivityPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
@@ -199,5 +197,21 @@ public class BarcodeActivity extends AppCompatActivity {
     public void update(String type, String text) {
         this.barcodeType.setText(type);
         this.barcodeText.setText(text);
+    }
+
+    /**
+     * Get restart button.
+     * @return restart button.
+     */
+    public FloatingActionButton getRestart() {
+        return this.restart;
+    }
+
+    /**
+     * Get barcode view.
+     * @return barcode view.
+     */
+    public CompoundBarcodeView getBarcodeView() {
+        return  this.barcodeView;
     }
 }
