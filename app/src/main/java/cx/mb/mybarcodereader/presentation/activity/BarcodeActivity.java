@@ -1,38 +1,32 @@
-package cx.mb.mybarcodereader.presentation.barcode;
+package cx.mb.mybarcodereader.presentation.activity;
 
 import android.Manifest;
-import android.content.ClipData;
-import android.content.ClipDescription;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.ContextMenu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import cx.mb.mybarcodereader.presentation.presenter.BarcodeActivityPresenter;
+import cx.mb.mybarcodereader.service.IntentUtilityService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import javax.inject.Inject;
-
-import static android.content.Intent.EXTRA_TEXT;
 
 /**
  * Barcode Reader Activity.
@@ -44,6 +38,12 @@ public class BarcodeActivity extends AppCompatActivity {
      */
     @Inject
     BarcodeActivityPresenter presenter;
+
+    /**
+     * Intent Service.
+     */
+    @Inject
+    IntentUtilityService intentService;
 
     /**
      * Barcode view.
@@ -73,11 +73,6 @@ public class BarcodeActivity extends AppCompatActivity {
      * Disposable items.
      */
     private final CompositeDisposable disposables = new CompositeDisposable();
-
-    /**
-     * Context menu id of 'copy'.
-     */
-    private final int CONTEXT_MENU_ID_1 = 0;
 
     /**
      * Create boot intent.
@@ -114,14 +109,6 @@ public class BarcodeActivity extends AppCompatActivity {
         disposables.add(disposable);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        menu.setHeaderTitle(getString(R.string.barcode_context_title));
-        menu.add(0, CONTEXT_MENU_ID_1, 0, getString(R.string.barcode_context_menu1));
-    }
-
     /**
      * Barcode text long click.
      * @return if return true, not fire click event.
@@ -135,12 +122,8 @@ public class BarcodeActivity extends AppCompatActivity {
             return true;
         }
 
-        ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
-        startActivity(sendIntent);
+        final Intent intent = intentService.createTextCopyIntent(this.barcodeText.getText().toString());
+        startActivity(intent);
 
         return true;
     }
@@ -199,5 +182,21 @@ public class BarcodeActivity extends AppCompatActivity {
     public void update(String type, String text) {
         this.barcodeType.setText(type);
         this.barcodeText.setText(text);
+    }
+
+    /**
+     * Get restart button.
+     * @return restart button.
+     */
+    public FloatingActionButton getRestart() {
+        return this.restart;
+    }
+
+    /**
+     * Get barcode view.
+     * @return barcode view.
+     */
+    public CompoundBarcodeView getBarcodeView() {
+        return  this.barcodeView;
     }
 }

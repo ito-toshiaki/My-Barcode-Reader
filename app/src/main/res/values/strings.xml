@@ -10,8 +10,8 @@
 
     <string name="error_barcode_text_is_empty">テキストが空です</string>
 
-    <string name="barcode_text_copied">テキストをクリップボードにコピーしました</string>
-
+    <!--
     <string name="barcode_context_title">メニュー</string>
     <string name="barcode_context_menu1">コピー</string>
+    -->
 </resources>

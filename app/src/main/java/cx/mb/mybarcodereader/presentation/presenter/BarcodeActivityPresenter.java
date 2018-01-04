@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.barcode;
+package cx.mb.mybarcodereader.presentation.presenter;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -7,9 +7,12 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
+import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.consumer.BarcodeScanResult;
@@ -17,6 +20,7 @@ import cx.mb.mybarcodereader.consumer.BarcodeScanResultConsumer;
 import cx.mb.mybarcodereader.model.BarcodeScanResultModel;
 import cx.mb.mybarcodereader.orma.Barcode;
 import cx.mb.mybarcodereader.orma.OrmaDatabase;
+import cx.mb.mybarcodereader.presentation.activity.BarcodeActivity;
 import cx.mb.mybarcodereader.service.HashService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -26,7 +30,7 @@ import timber.log.Timber;
 /**
  * Presenter class for BarcodeActivity.
  */
-public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, BarcodeScanResult {
+public class BarcodeActivityPresenter implements BarcodeScanResult, BarcodeCallback {
 
     /**
      * Parent activity.
@@ -57,9 +61,10 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
      * Constructor.
      *
      * @param hashService hash service.
-     * @param database database.
+     * @param database    database.
      */
-    public BarcodeActivityPresenterImpl(HashService hashService, OrmaDatabase database) {
+    @Inject
+    public BarcodeActivityPresenter(HashService hashService, OrmaDatabase database) {
         this.hashService = hashService;
         this.database = database;
     }
@@ -86,29 +91,40 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
 
     @Override
     public void possibleResultPoints(List<ResultPoint> resultPoints) {
-
+        // do nothing.
     }
 
-    @Override
+    /**
+     * onCreate.
+     * @param parent parent activity.
+     */
     public void onCreate(Activity parent) {
         this.parent = (BarcodeActivity) parent;
         Disposable subscribe = status.subscribe(new BarcodeScanResultConsumer(this, this.hashService, this.database));
         disposables.add(subscribe);
     }
 
-    @Override
+    /**
+     * onDestroy.
+     */
     public void onDestroy() {
         disposables.clear();
     }
 
-    @Override
+    /**
+     * Start camera.
+     */
     public void startCamera() {
         status.onNext(BarcodeScanResultModel.getDefault());
     }
 
-    @Override
+    /**
+     * Return scanned.
+     * @return scanned.
+     */
     public boolean isScanned() {
-        return this.status.getValue().isScanned();
+        final BarcodeScanResultModel value = this.status.getValue();
+        return value != null && value.isScanned();
     }
 
     @Override
@@ -117,8 +133,8 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
         if (!scanned) {
             parent.update("", "");
             parent.resumeScan();
-            parent.restart.setVisibility(View.GONE);
-            new Handler().postDelayed(() -> parent.barcodeView.decodeSingle(BarcodeActivityPresenterImpl.this), 1000);
+            parent.getRestart().setVisibility(View.GONE);
+            new Handler().postDelayed(() -> parent.getBarcodeView().decodeSingle(this), 1000);
             return;
         }
 
@@ -130,6 +146,6 @@ public class BarcodeActivityPresenterImpl implements BarcodeActivityPresenter, B
         parent.update(item.getType(), item.getText());
 
         parent.pauseScan();
-        parent.restart.setVisibility(View.VISIBLE);
+        parent.getRestart().setVisibility(View.VISIBLE);
     }
 }
