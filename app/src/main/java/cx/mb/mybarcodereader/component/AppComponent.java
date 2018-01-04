@@ -2,10 +2,9 @@ package cx.mb.mybarcodereader.component;
 
 import cx.mb.mybarcodereader.application.MyApplication;
 import cx.mb.mybarcodereader.module.AppModule;
-import cx.mb.mybarcodereader.module.PresenterModule;
 import cx.mb.mybarcodereader.module.ServiceModule;
-import cx.mb.mybarcodereader.presentation.barcode.BarcodeActivity;
-import cx.mb.mybarcodereader.presentation.main.MainActivity;
+import cx.mb.mybarcodereader.presentation.activity.BarcodeActivity;
+import cx.mb.mybarcodereader.presentation.activity.MainActivity;
 import dagger.Component;
 
 import javax.inject.Singleton;
@@ -14,7 +13,7 @@ import javax.inject.Singleton;
  * DI container.
  */
 @Singleton
-@Component(modules = {AppModule.class, PresenterModule.class, ServiceModule.class})
+@Component(modules = {AppModule.class, ServiceModule.class})
 public interface AppComponent {
 
     /**

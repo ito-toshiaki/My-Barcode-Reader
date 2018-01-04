@@ -1,4 +1,4 @@
-package cx.mb.mybarcodereader.presentation.barcode;
+package cx.mb.mybarcodereader.presentation.activity;
 
 import android.Manifest;
 import android.content.Context;
@@ -6,21 +6,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.journeyapps.barcodescanner.CompoundBarcodeView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.journeyapps.barcodescanner.CompoundBarcodeView;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
+import cx.mb.mybarcodereader.presentation.presenter.BarcodeActivityPresenter;
+import cx.mb.mybarcodereader.service.IntentUtilityService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import javax.inject.Inject;
 
 /**
  * Barcode Reader Activity.
@@ -32,6 +38,12 @@ public class BarcodeActivity extends AppCompatActivity {
      */
     @Inject
     BarcodeActivityPresenter presenter;
+
+    /**
+     * Intent Service.
+     */
+    @Inject
+    IntentUtilityService intentService;
 
     /**
      * Barcode view.
@@ -64,6 +76,7 @@ public class BarcodeActivity extends AppCompatActivity {
 
     /**
      * Create boot intent.
+     *
      * @param context parent context.
      * @return intent
      */
@@ -96,6 +109,25 @@ public class BarcodeActivity extends AppCompatActivity {
         disposables.add(disposable);
     }
 
+    /**
+     * Barcode text long click.
+     * @return if return true, not fire click event.
+     */
+    @OnLongClick(R.id.barcode_text)
+    @SuppressWarnings("unused")
+    public boolean onLongClick() {
+
+        if (TextUtils.isEmpty(barcodeText.getText().toString())) {
+            Toast.makeText(this, getText(R.string.error_barcode_text_is_empty), Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        final Intent intent = intentService.createTextCopyIntent(this.barcodeText.getText().toString());
+        startActivity(intent);
+
+        return true;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -106,13 +138,17 @@ public class BarcodeActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        barcodeView.pause();
+        if (!this.presenter.isScanned()) {
+            barcodeView.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        barcodeView.resume();
+        if (!this.presenter.isScanned()) {
+            barcodeView.resume();
+        }
     }
 
     /**
@@ -139,11 +175,28 @@ public class BarcodeActivity extends AppCompatActivity {
 
     /**
      * Set barcode type and text.
+     *
      * @param type type.
      * @param text text.
      */
     public void update(String type, String text) {
         this.barcodeType.setText(type);
         this.barcodeText.setText(text);
+    }
+
+    /**
+     * Get restart button.
+     * @return restart button.
+     */
+    public FloatingActionButton getRestart() {
+        return this.restart;
+    }
+
+    /**
+     * Get barcode view.
+     * @return barcode view.
+     */
+    public CompoundBarcodeView getBarcodeView() {
+        return  this.barcodeView;
     }
 }

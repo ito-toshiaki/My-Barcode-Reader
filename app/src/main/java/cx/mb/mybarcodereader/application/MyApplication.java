@@ -7,7 +7,6 @@ import cx.mb.mybarcodereader.BuildConfig;
 import cx.mb.mybarcodereader.component.AppComponent;
 import cx.mb.mybarcodereader.component.DaggerAppComponent;
 import cx.mb.mybarcodereader.module.AppModule;
-import cx.mb.mybarcodereader.module.PresenterModule;
 import cx.mb.mybarcodereader.module.ServiceModule;
 import timber.log.Timber;
 
@@ -39,7 +38,6 @@ public class MyApplication extends Application {
         appComponent = DaggerAppComponent
                 .builder()
                 .appModule(new AppModule(this))
-                .presenterModule(new PresenterModule())
                 .serviceModule(new ServiceModule())
                 .build();
 

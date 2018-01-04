@@ -2,7 +2,16 @@
     <string name="app_name">My Barcode Reader</string>
     <string name="captured_image">Captured Image</string>
 
+    <string name="dummy">DUMMY TEXT</string>
+
     <string name="error_unsupported_barcode_format">未対応のバーコードです</string>
     <string name="error_permission_external_storage">ストレージの使用を許可してください</string>
     <string name="error_permission_camera">カメラの使用を許可してください</string>
+
+    <string name="error_barcode_text_is_empty">テキストが空です</string>
+
+    <!--
+    <string name="barcode_context_title">メニュー</string>
+    <string name="barcode_context_menu1">コピー</string>
+    -->
 </resources>
