@@ -1,7 +1,6 @@
 package cx.mb.mybarcodereader.presentation.activity;
 
 import android.Manifest;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,11 +23,10 @@ import butterknife.OnLongClick;
 import cx.mb.mybarcodereader.R;
 import cx.mb.mybarcodereader.application.MyApplication;
 import cx.mb.mybarcodereader.presentation.presenter.BarcodeActivityPresenter;
+import cx.mb.mybarcodereader.service.IntentUtilityService;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
-
-import static android.content.Intent.EXTRA_TEXT;
 
 /**
  * Barcode Reader Activity.
@@ -40,6 +38,12 @@ public class BarcodeActivity extends AppCompatActivity {
      */
     @Inject
     BarcodeActivityPresenter presenter;
+
+    /**
+     * Intent Service.
+     */
+    @Inject
+    IntentUtilityService intentService;
 
     /**
      * Barcode view.
@@ -118,12 +122,8 @@ public class BarcodeActivity extends AppCompatActivity {
             return true;
         }
 
-        ClipData.Item clip = new ClipData.Item(this.barcodeText.getText());
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
-        startActivity(sendIntent);
+        final Intent intent = intentService.createTextCopyIntent(this.barcodeText.getText().toString());
+        startActivity(intent);
 
         return true;
     }

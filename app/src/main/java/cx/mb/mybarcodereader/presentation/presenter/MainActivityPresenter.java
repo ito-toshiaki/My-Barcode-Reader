@@ -13,6 +13,7 @@ import cx.mb.mybarcodereader.orma.Barcode;
 import cx.mb.mybarcodereader.orma.OrmaDatabase;
 import cx.mb.mybarcodereader.presentation.activity.BarcodeActivity;
 import cx.mb.mybarcodereader.presentation.activity.MainActivity;
+import cx.mb.mybarcodereader.service.IntentUtilityService;
 import timber.log.Timber;
 
 /**
@@ -31,12 +32,19 @@ public class MainActivityPresenter implements AdapterView.OnItemLongClickListene
     private MainActivity parent;
 
     /**
+     * Intent utility service.
+     */
+    private IntentUtilityService service;
+
+    /**
      * Constructor.
      * @param database database.
+     * @param service intent utility service.
      */
     @Inject
-    public MainActivityPresenter(OrmaDatabase database) {
+    public MainActivityPresenter(OrmaDatabase database, IntentUtilityService service) {
         this.database = database;
+        this.service = service;
     }
 
     /**
@@ -50,12 +58,6 @@ public class MainActivityPresenter implements AdapterView.OnItemLongClickListene
         ((MainActivity) parent).getResultList().setAdapter(adapter);
         ((MainActivity) parent).getResultList().setOnItemLongClickListener(this);
     }
-
-//    /**
-//     * onDestroy.
-//     */
-//    public void onDestroy() {
-//    }
 
     /**
      * Start camera.
@@ -73,12 +75,8 @@ public class MainActivityPresenter implements AdapterView.OnItemLongClickListene
             return true;
         }
 
-        ClipData.Item clip = new ClipData.Item(item.getText());
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.setType("text/plain");
-        sendIntent.putExtra(Intent.EXTRA_TEXT, clip.getText());   // メモ帳のテキスト欄、メールアプリの本文にテキストをセット
-        parent.startActivity(sendIntent);
+        final Intent intent = service.createTextCopyIntent(item.getText());
+        parent.startActivity(intent);
 
         return true;
     }
