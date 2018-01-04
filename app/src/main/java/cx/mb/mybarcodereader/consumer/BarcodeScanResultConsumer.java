@@ -38,8 +38,9 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
 
     /**
      * Constructor.
-     * @param parent result destination.
-     * @param hash hash service.
+     *
+     * @param parent   result destination.
+     * @param hash     hash service.
      * @param database database.
      */
     @Inject
@@ -61,14 +62,14 @@ public class BarcodeScanResultConsumer implements Consumer<BarcodeScanResultMode
             }
 
             Barcode item = new Barcode();
-            item.setKey(primaryKey);
+            item.key = primaryKey;
 
-            item.setType(result.getType());
-            item.setText(result.getText());
+            item.type = result.getType();
+            item.text = result.getText();
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             result.getBitmap().compress(Bitmap.CompressFormat.PNG, 100, bos);
-            item.setImage(bos.toByteArray());
-            item.setCreateAt(new Date());
+            item.image = bos.toByteArray();
+            item.createAt = new Date();
 
             database.insertIntoBarcode(item);
 

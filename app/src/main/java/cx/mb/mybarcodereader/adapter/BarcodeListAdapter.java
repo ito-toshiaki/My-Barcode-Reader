@@ -51,16 +51,16 @@ public class BarcodeListAdapter extends OrmaListAdapter<Barcode> {
         }
 
         final Barcode item = getItem(i);
-        String formattedCreateAt = DateFormat.format("yyyy/MM/dd kk:mm:ss", item.getCreateAt()).toString();
+        String formattedCreateAt = DateFormat.format("yyyy/MM/dd kk:mm:ss", item.createAt).toString();
 
-        holder.type.setText(item.getType());
-        holder.text.setText(item.getText());
+        holder.type.setText(item.type);
+        holder.text.setText(item.text);
         holder.createAt.setText(formattedCreateAt);
-        if (item.getBitmap() == null) {
-            final Bitmap bitmap = BitmapFactory.decodeByteArray(item.getImage(), 0, item.getImage().length);
-            item.setBitmap(bitmap);
+        if (item.bitmap == null) {
+            final Bitmap bitmap = BitmapFactory.decodeByteArray(item.image, 0, item.image.length);
+            item.bitmap = bitmap;
         }
-        holder.image.setImageBitmap(item.getBitmap());
+        holder.image.setImageBitmap(item.bitmap);
 
         return view;
     }
