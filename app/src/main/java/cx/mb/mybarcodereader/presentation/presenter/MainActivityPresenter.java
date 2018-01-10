@@ -75,7 +75,7 @@ public class MainActivityPresenter implements AdapterView.OnItemLongClickListene
             return true;
         }
 
-        final Intent intent = service.createTextCopyIntent(item.getText());
+        final Intent intent = service.createTextCopyIntent(item.text);
         parent.startActivity(intent);
 
         return true;

@@ -143,7 +143,7 @@ public class BarcodeActivityPresenter implements BarcodeScanResult, BarcodeCallb
             this.status.onNext(BarcodeScanResultModel.getDefault());
             return;
         }
-        parent.update(item.getType(), item.getText());
+        parent.update(item.type, item.text);
 
         parent.pauseScan();
         parent.getRestart().setVisibility(View.VISIBLE);
